@@ -1,12 +1,12 @@
-﻿@model IEnumerable<Instructor>
+﻿@model IEnumerable<Course>
 @{
-    ViewData["Title"] = "Instructors";
+    ViewData["Title"] = "Courses";
 }
 
 
-<h1>All Instructors</h1>
+<h1>All Courses</h1>
 
-<a class="btn btn-info" asp-action="Add"> Add Instructor</a>
+<a class="btn btn-info" asp-action="Add"> Add Course</a>
 <br />
 <br />
 <form>
@@ -24,19 +24,16 @@
             Name
         </th>
         <th>
-            Salary
+            Degree
         </th>
         <th>
-            Image
+            Min Degree
         </th>
         <th>
-            Adderss
+            Hours
         </th>
         <th>
             Depratment ID
-        </th>
-        <th>
-            Course Id
         </th>
         <th>
             Details
@@ -48,25 +45,24 @@
             Delete
         </th>
     </tr>
-    <tbody >
-        @foreach(Instructor ins in Model)
+    <tbody>
+        @foreach (Course crs in Model)
         {
             <tr>
-                <td>@ins.Id</td>
-                <td>@ins.Name</td>
-                <td>@ins.Salary</td>
-                <td><img src="/Images/@ins.Image" alt="/Images/@ins.Image" width="50px" /></td>
-                <td>@ins.Address</td>
-                <td>@ins.dept_id</td>
-                <td>@ins.Crs_id</td>
-                <td> <a asp-action="Details" asp-route-id="@ins.Id" class="btn btn-info">Details</a></td>
-                <td> <a asp-action="Edit" asp-route-id="@ins.Id" class="btn btn-dark">Edit</a></td>
+                <td>@crs.Id</td>
+                <td>@crs.Name</td>
+                <td>@crs.Degree</td>
+                <td>@crs.MinDegree</td>
+                <td>@crs.Hours</td>
+                <td>@crs.dept_id</td>
+                <td> <a asp-action="Details" asp-route-id="@crs.Id" class="btn btn-info">Details</a></td>
+                <td> <a asp-action="Edit" asp-route-id="@crs.Id" class="btn btn-dark">Edit</a></td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@ins.Id" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@crs.Id" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
                 </td>
             </tr>
         }
-        
+
     </tbody>
 </table>
 

@@ -1,4 +1,5 @@
-﻿using ITI_Project.Models.Context;
+﻿using Humanizer;
+using ITI_Project.Models.Context;
 using ITI_Project.Models.Entities;
 using ITI_Project.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,7 @@ namespace ITI_Project.Models.EntitiesBL
             var result =app.Instructors.ToList();
             return result;
         }
-        public IQueryable<Instructor> GetInstructorsByAddress(string name)
+        public IQueryable<Instructor> GetInstructorsByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -24,16 +25,14 @@ namespace ITI_Project.Models.EntitiesBL
             }
 
             return app.Instructors
-                                .AsNoTracking()
-                                .AsEnumerable() // Client-side evaluation
-                                .Where(i => string.Equals(i.Name.Trim(), name.Trim(), StringComparison.OrdinalIgnoreCase))
-                                .AsQueryable();
+                 .AsNoTracking()
+                 .Where(i => EF.Functions.Like(i.Name.Trim().ToLower(), $"%{name.Trim().ToLower()}%"));
         }
 
         public Instructor GetByID(int id)
         {
             var result =app.Instructors.Find(id);
-            Dispose();
+            //Dispose();
             return result;
         }
         public List<Department> DepartList()
@@ -76,9 +75,16 @@ namespace ITI_Project.Models.EntitiesBL
             Dispose();
         }
 
+        public void Delete(Instructor instructor)
+        {
+            app.Instructors.Remove(instructor);
+            app.SaveChanges();
+            
+        }
         public void Dispose()
         {
             app.Dispose();
         }
+
     }
 }

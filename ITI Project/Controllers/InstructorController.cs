@@ -9,18 +9,17 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace ITI_Project.Controllers
 {
-    public class InstructorController : Controller,IDisposable
+    public class InstructorController : Controller
     {
         InstructorBL inst = new InstructorBL();
         public IActionResult Index()
         {
-
           var Instructrs= inst.GetAll();
             return View(Instructrs);
         }
         public IActionResult SearchByName(string name)
         {
-            return View("Index", inst.GetInstructorsByAddress(name));
+            return View("Index", inst.GetInstructorsByName(name));
         }
         public IActionResult Details(int id)
         {
@@ -90,6 +89,13 @@ namespace ITI_Project.Controllers
             i.crs = inst.CrsList();
 
             return View(i);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var i=inst.GetByID(id);
+            inst.Delete(i);
+            return RedirectToAction("Index");
         }
     }
 }
