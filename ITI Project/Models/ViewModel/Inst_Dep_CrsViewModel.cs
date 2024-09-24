@@ -1,16 +1,18 @@
-﻿namespace ITI_Project.Models.Entities
+﻿using ITI_Project.Models.Entities;
+
+namespace ITI_Project.Models.ViewModel
 {
-    public class Instructor
+    public class Inst_Dep_CrsViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public decimal Salary { get; set; }
         public string? Image { get; set; } = null!;
         public string? Address { get; set; } = null!;
-
         public int dept_id { get; set; }
-        public Department Department { get; set; }=null!;
         public int Crs_id { get; set; }
-        public Course Course { get; set; }=null!;
+
+        public List<Department> Dep { get; set; }
+        public List<Course> crs { get; set; }
     }
 }

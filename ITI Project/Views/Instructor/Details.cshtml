@@ -1,0 +1,42 @@
+﻿@model Instructor
+@{
+    ViewData["Title"] = "Instructor Details";
+}
+
+<h1>@Model.Name Insturctor</h1>
+<table class="table table-bordered table-hover ">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Salary
+        </th>
+        <th>
+            Image
+        </th>
+        <th>
+            Adderss
+        </th>
+        <th>
+            Depratment ID
+        </th>
+        <th>
+            Course Id
+        </th>
+    </tr>
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.Name</td>
+        <td>@Model.Salary</td>
+        <td><img src="/Images/@Model.Image" alt="/Images/@Model.Image" width="50px" /></td>
+        <td>@Model.Address</td>
+        <td>@Model.dept_id</td>
+        <td>@Model.Crs_id</td>
+    </tr>
+</table>
+<button class="btn btn-info"><a asp-action="Index">Back to List</a> </button>
+
