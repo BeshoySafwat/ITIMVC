@@ -12,6 +12,7 @@ namespace ITI_Project.Models.ViewModel
         public int dept_id { get; set; }
         public int Crs_id { get; set; }
 
+
         public List<Department> Dep { get; set; }
         public List<Course> crs { get; set; }
     }
