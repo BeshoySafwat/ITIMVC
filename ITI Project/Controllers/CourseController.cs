@@ -1,5 +1,8 @@
-﻿using ITI_Project.Models.EntitiesBL;
+﻿using ITI_Project.Models.Entities;
+using ITI_Project.Models.EntitiesBL;
+using ITI_Project.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ITI_Project.Controllers
 {
@@ -8,21 +11,23 @@ namespace ITI_Project.Controllers
         CourseBL courseBL = new CourseBL();
         public IActionResult Index()
         {
-            var courses = courseBL.GetAll();
-            return View(courses);
+            var model = courseBL.GetViewModel();
+            return View(model);
         }
         public IActionResult SearchByName(string name)
         {
-            return View("Index", courseBL.GetCoursesByName(name));
+            var viewModel = courseBL.GetViewModel();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                var filteredCourses = courseBL.GetCoursesByName(name).ToList();
+                viewModel.crs = filteredCourses;
+            }
+            return View("Index", viewModel);
         }
         public IActionResult Details(int id)
         {
             var course = courseBL.GetByID(id);
             return View(course);
-        }
-        public IActionResult Add()
-        {
-            return View(courseBL.DepartList());
         }
         public IActionResult Delete(int id)
         {
@@ -30,5 +35,35 @@ namespace ITI_Project.Controllers
             courseBL.Delete(i);
             return RedirectToAction("Index");
         }
+        public IActionResult Add()
+        {
+            var model = courseBL.GetViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Add(Inst_Dep_CrsViewModel c)
+        {
+
+            if (!c.Name.IsNullOrEmpty())
+            {
+                Course course = c;
+                courseBL.Add(course);
+                return RedirectToAction("Index");
+            }
+            var dep = courseBL.DepartList();
+            c.Dep = dep;
+            var courses = courseBL.GetAll().ToList();
+            c.crs = courses;
+            return View(c);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                courseBL.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

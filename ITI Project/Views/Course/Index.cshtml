@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Course>
+﻿@model Inst_Dep_CrsViewModel
 @{
     ViewData["Title"] = "Courses";
 }
@@ -46,7 +46,7 @@
         </th>
     </tr>
     <tbody>
-        @foreach (Course crs in Model)
+        @foreach (Course crs in Model.crs)
         {
             <tr>
                 <td>@crs.Id</td>
@@ -78,11 +78,11 @@
         // If name is not empty, update the URL with the value
         if (name) {
             // Dynamically set the href with the route and parameter
-            this.href = '@Url.Action("SearchByName", "Instructor")?name=' + encodeURIComponent(name);
+            this.href = '@Url.Action("SearchByName", "Course")?name=' + encodeURIComponent(name);
             // Redirect to the updated href
             window.location.href = this.href;
         } else {
-            this.href = '@Url.Action("Index", "Instructor")';
+            this.href = '@Url.Action("Index", "Course")';
             window.location.href = this.href;
         }
     });

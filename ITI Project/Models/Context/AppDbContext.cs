@@ -26,6 +26,5 @@ namespace ITI_Project.Models.Context
         public DbSet<Trainee>    Trainees { get; set; }
         public DbSet<Course>     Courses { get; set; }
         public DbSet<CrsResult>  CourseResule {  get; set; }
-        public DbSet<ITI_Project.Models.ViewModel.Inst_Dep_CrsViewModel> Inst_Dep_CrsViewModel { get; set; } = default!;
     }
 }

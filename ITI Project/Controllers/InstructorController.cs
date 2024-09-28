@@ -14,7 +14,7 @@ namespace ITI_Project.Controllers
         InstructorBL inst = new InstructorBL();
         public IActionResult Index()
         {
-          var Instructrs= inst.GetAll();
+            var Instructrs = inst.GetAll();
             return View(Instructrs);
         }
         public IActionResult SearchByName(string name)
@@ -27,7 +27,7 @@ namespace ITI_Project.Controllers
             return View(Instructr);
         }
         public IActionResult Add()
-        { 
+        {
             return View(inst.instviewModel());
         }
         [HttpPost]
@@ -36,36 +36,39 @@ namespace ITI_Project.Controllers
             Instructor instructor = new Instructor();
             if (!i.Name.IsNullOrEmpty())
             {
-                instructor.Name=i.Name;
-                instructor.Salary=i.Salary;
-                instructor.Address=i.Address;
-                instructor.Image=i.Image;
-                instructor.dept_id=i.dept_id;
-                instructor.Crs_id=i.Crs_id;
+                instructor.Name = i.Name;
+                instructor.Salary = i.Salary;
+                instructor.Address = i.Address;
+                instructor.Image = i.Image;
+                instructor.dept_id = i.department_id;
+                instructor.Crs_id = i.Course_id;
 
                 inst.Add(instructor);
                 return RedirectToAction("Index");
             }
-            i.Dep = inst.DepartList();
-            i.crs=inst.CrsList();
+            var dep = inst.DepartList();
+            i.Dep = dep;
+            var course = inst.CrsList();
+            i.crs = course;
             return View(i);
         }
-        public IActionResult Edit(int id) {
-           Inst_Dep_CrsViewModel Vinst =inst.instviewModel();
-            
-           var instructor= inst.GetByID(id);
-            if(instructor is not null)
+        public IActionResult Edit(int id)
+        {
+            Inst_Dep_CrsViewModel Vinst = inst.instviewModel();
+
+            var instructor = inst.GetByID(id);
+            if (instructor is not null)
             {
                 Vinst.Id = instructor.Id;
-                Vinst.Name=instructor.Name;
-                Vinst.Salary=instructor.Salary;
-                Vinst.Address=instructor.Address;
-                Vinst.Image=instructor.Image;
-                Vinst.Crs_id= instructor.Crs_id;
-                Vinst.dept_id=instructor.dept_id;
+                Vinst.Name = instructor.Name;
+                Vinst.Salary = instructor.Salary;
+                Vinst.Address = instructor.Address;
+                Vinst.Image = instructor.Image;
+                Vinst.Course_id = instructor.Crs_id;
+                Vinst.department_id = instructor.dept_id;
                 return View(Vinst);
             }
-           return NotFound();
+            return NotFound();
         }
         [HttpPost]
         public IActionResult Edit(int? id, Inst_Dep_CrsViewModel i)
@@ -74,13 +77,13 @@ namespace ITI_Project.Controllers
             Instructor instructor = new Instructor();
             if (i.Name is not null)
             {
-                instructor.Id=i.Id;
+                instructor.Id = i.Id;
                 instructor.Name = i.Name;
                 instructor.Salary = i.Salary;
                 instructor.Address = i.Address;
                 instructor.Image = i.Image;
-                instructor.Crs_id = i.Crs_id;
-                instructor.dept_id = i.dept_id;
+                instructor.Crs_id = i.Course_id;
+                instructor.dept_id = i.department_id;
 
                 inst.Update(instructor);
                 return RedirectToAction("Index");
@@ -93,9 +96,10 @@ namespace ITI_Project.Controllers
 
         public IActionResult Delete(int id)
         {
-            var i=inst.GetByID(id);
+            var i = inst.GetByID(id);
             inst.Delete(i);
             return RedirectToAction("Index");
         }
     }
+
 }
