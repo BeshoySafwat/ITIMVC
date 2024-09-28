@@ -44,7 +44,7 @@ namespace ITI_Project.Controllers
         public IActionResult Add(Inst_Dep_CrsViewModel c)
         {
 
-            if (!c.Name.IsNullOrEmpty())
+            if (ModelState.IsValid)
             {
                 Course course = c;
                 courseBL.Add(course);
@@ -64,6 +64,17 @@ namespace ITI_Project.Controllers
             }
             base.Dispose(disposing);
         }
-
+        // Ajax Call and return json
+        public IActionResult CheckDegree(float MinDegree, float Degree)
+        {
+            if(Degree < MinDegree)
+            {
+                return Json("The Degree Muse Be Greter Than Min Degree");
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
     }
 }
