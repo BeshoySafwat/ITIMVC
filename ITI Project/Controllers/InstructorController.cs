@@ -41,7 +41,7 @@ namespace ITI_Project.Controllers
                 instructor.Address = i.Address;
                 instructor.Image = i.Image;
                 instructor.dept_id = i.department_id;
-                instructor.Crs_id = i.Course_id;
+                instructor.Crs_id = (int)i.Course_id;
 
                 inst.Add(instructor);
                 return RedirectToAction("Index");
@@ -77,12 +77,12 @@ namespace ITI_Project.Controllers
             Instructor instructor = new Instructor();
             if (i.Name is not null)
             {
-                instructor.Id = i.Id;
+                instructor.Id = (int)i.Id;
                 instructor.Name = i.Name;
                 instructor.Salary = i.Salary;
                 instructor.Address = i.Address;
                 instructor.Image = i.Image;
-                instructor.Crs_id = i.Course_id;
+                instructor.Crs_id = (int)i.Course_id;
                 instructor.dept_id = i.department_id;
 
                 inst.Update(instructor);
